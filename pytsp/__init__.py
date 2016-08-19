@@ -98,12 +98,13 @@ def run(tsp_path, start=None, solver="concorde"):
         solf = os.path.join(
             bdir, os.path.splitext(os.path.basename(tsp_path))[0] + ".sol")
 
-        with open(solf) as src:
+        with open(solf, 'r') as src:
             sol = src.read()
 
         raw = [int(x) for x in sol.split()[1:]]  # first is just n cities
 
-        metadata = output.strip().split("\n")
+        metadata = str(output).strip().split("\n")
+        solution = None
         for line in metadata:
             if line.startswith("Optimal Solution:"):
                 solution = float(line.split(":")[1])
@@ -121,7 +122,7 @@ def run(tsp_path, start=None, solver="concorde"):
         meta = []
         raw = []
         solution = None
-        with open(out_path) as src:
+        with open(out_path, 'r') as src:
             header = True
             for line in src:
                 if header:
